@@ -1,0 +1,22 @@
+.page{background:#fcf4e8;color:#503522;font-size:calc(28 * var(--rpx))}
+.play{padding:calc(28 * var(--rpx)) calc(28 * var(--rpx)) calc(60 * var(--rpx));box-sizing:border-box}
+.hero{background:#f8e3c2;border-radius:calc(32 * var(--rpx));padding:calc(32 * var(--rpx));margin-bottom:calc(24 * var(--rpx))}
+.eyebrow{font-size:calc(24 * var(--rpx));font-weight:700;color:#895525;letter-spacing:calc(2 * var(--rpx))}
+.title{font-size:calc(48 * var(--rpx));font-weight:800;margin:calc(8 * var(--rpx)) 0}
+.name{font-size:calc(32 * var(--rpx));font-weight:700}
+.muted{font-size:calc(25 * var(--rpx));color:#795f48;line-height:1.55;margin-top:calc(8 * var(--rpx))}
+.card{padding:calc(26 * var(--rpx));background:#fffdf8;border-radius:calc(26 * var(--rpx));margin:0 0 calc(20 * var(--rpx));box-shadow:0 calc(8 * var(--rpx)) calc(24 * var(--rpx)) #92603215}
+.entry,.row{display:flex;align-items:center;gap:calc(20 * var(--rpx))}
+.entry{min-height:calc(100 * var(--rpx))}.chevron{margin-left:auto;font-size:calc(46 * var(--rpx));color:#895525}
+.badge{display:flex;align-items:center;justify-content:center;width:calc(84 * var(--rpx));height:calc(84 * var(--rpx));border-radius:calc(24 * var(--rpx));background:#fae4bd;font-size:calc(44 * var(--rpx));flex-shrink:0}
+.mint{background:#e3edd9}.blue{background:#e2edf3}
+.action,.quiet,.choice{font-size:calc(28 * var(--rpx));margin:calc(16 * var(--rpx)) 0 0;border-radius:calc(20 * var(--rpx));line-height:1.4;padding:calc(18 * var(--rpx)) calc(20 * var(--rpx));box-sizing:border-box}
+.action{background:#a95722;color:#fff;font-weight:700}.quiet,.choice{background:#f6ebdc;color:#624023}.choice{text-align:left}
+.back{margin:0 0 calc(20 * var(--rpx))}.notice{min-height:calc(32 * var(--rpx));margin-top:calc(16 * var(--rpx));color:#895525}.question{margin:calc(12 * var(--rpx)) 0 calc(20 * var(--rpx))}
+button::after{border:0}.row button{flex:1}
+
+
+.pet-line{display:flex;justify-content:space-between;align-items:center;gap:calc(20 * var(--rpx));padding:calc(18 * var(--rpx)) 0;border-bottom:calc(1 * var(--rpx)) solid #eee0cb}
+.pet-line .muted{margin:0}.subsection{margin-top:calc(24 * var(--rpx))}
+.nickname{flex:2;min-width:0;padding:calc(14 * var(--rpx));background:#fcf4e8;border-radius:calc(14 * var(--rpx))}.row button{white-space:nowrap;margin:0}.row{margin:calc(20 * var(--rpx)) 0}
+

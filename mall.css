@@ -1,0 +1,35 @@
+.page{background:#fcf4e8;color:#503522;font-size:calc(28 * var(--rpx))}
+.play{padding:calc(28 * var(--rpx)) calc(28 * var(--rpx)) calc(60 * var(--rpx));box-sizing:border-box}
+.hero{background:#f8e3c2;border-radius:calc(32 * var(--rpx));padding:calc(32 * var(--rpx));margin-bottom:calc(24 * var(--rpx))}
+.eyebrow{font-size:calc(24 * var(--rpx));font-weight:700;color:#895525;letter-spacing:calc(2 * var(--rpx))}
+.title{font-size:calc(48 * var(--rpx));font-weight:800;margin:calc(8 * var(--rpx)) 0}
+.name{font-size:calc(32 * var(--rpx));font-weight:700}
+.muted{font-size:calc(25 * var(--rpx));color:#795f48;line-height:1.55;margin-top:calc(8 * var(--rpx))}
+.card{padding:calc(26 * var(--rpx));background:#fffdf8;border-radius:calc(26 * var(--rpx));margin:0 0 calc(20 * var(--rpx));box-shadow:0 calc(8 * var(--rpx)) calc(24 * var(--rpx)) #92603215}
+.entry,.row{display:flex;align-items:center;gap:calc(20 * var(--rpx))}
+.entry{min-height:calc(100 * var(--rpx))}.chevron{margin-left:auto;font-size:calc(46 * var(--rpx));color:#895525}
+.badge{display:flex;align-items:center;justify-content:center;width:calc(84 * var(--rpx));height:calc(84 * var(--rpx));border-radius:calc(24 * var(--rpx));background:#fae4bd;font-size:calc(44 * var(--rpx));flex-shrink:0}
+.mint{background:#e3edd9}.blue{background:#e2edf3}
+.action,.quiet,.choice{font-size:calc(28 * var(--rpx));margin:calc(16 * var(--rpx)) 0 0;border-radius:calc(20 * var(--rpx));line-height:1.4;padding:calc(18 * var(--rpx)) calc(20 * var(--rpx));box-sizing:border-box}
+.action{background:#a95722;color:#fff;font-weight:700}.quiet,.choice{background:#f6ebdc;color:#624023}.choice{text-align:left}
+.back{margin:0 0 calc(20 * var(--rpx))}.notice{min-height:calc(32 * var(--rpx));margin-top:calc(16 * var(--rpx));color:#895525}.question{margin:calc(12 * var(--rpx)) 0 calc(20 * var(--rpx))}
+button::after{border:0}.row button{flex:1}
+
+
+
+.shop-hero,.section,.product{display:flex;justify-content:space-between;align-items:center;gap:calc(20 * var(--rpx))}
+.score-box{min-width:calc(126 * var(--rpx));padding:calc(12 * var(--rpx)) calc(16 * var(--rpx));text-align:center;border-radius:calc(22 * var(--rpx));background:#fff8e9}
+.score-box .muted,.section .muted{margin:0}.score{font-size:calc(42 * var(--rpx));font-weight:800;color:#9a491a}
+.dex-entry{display:flex;align-items:center;gap:calc(18 * var(--rpx));width:100%;padding:calc(14 * var(--rpx)) calc(22 * var(--rpx));margin:0 0 calc(20 * var(--rpx));border-radius:calc(24 * var(--rpx));background:#fff9eb;text-align:left;color:#503522;line-height:1.35}
+.dex-thumb{position:relative;overflow:hidden;width:calc(72 * var(--rpx));height:calc(90 * var(--rpx));flex-shrink:0;border-radius:calc(12 * var(--rpx));background:#fff5e5}
+.dex-thumb img{position:absolute;top:0;left:0;width:500%;height:400%}
+.dex-label .muted{font-size:calc(22 * var(--rpx));margin-top:calc(4 * var(--rpx))}
+.categories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(10 * var(--rpx))}
+.category{width:100%;margin:0;padding:calc(12 * var(--rpx)) calc(4 * var(--rpx));display:flex;flex-direction:column;align-items:center;gap:calc(4 * var(--rpx));border-radius:calc(18 * var(--rpx));background:#fffdf8;color:#60422c;font-size:calc(23 * var(--rpx));line-height:1.45}
+.category-icon{font-size:calc(34 * var(--rpx))}.category.active{background:#f5d9b1;color:#60351a;font-weight:700;box-shadow:inset 0 0 0 calc(2 * var(--rpx)) #c67c48}
+.section{margin:calc(26 * var(--rpx)) calc(4 * var(--rpx)) calc(16 * var(--rpx))}.product{min-height:calc(104 * var(--rpx));padding:calc(20 * var(--rpx)) calc(24 * var(--rpx));margin-bottom:calc(14 * var(--rpx))}
+.product-main{min-width:0}.product .name{font-size:calc(29 * var(--rpx))}.product .muted{font-size:calc(22 * var(--rpx))}
+.owned{margin-top:calc(8 * var(--rpx));font-size:calc(22 * var(--rpx));color:#795f48}
+.product-side{flex-shrink:0;text-align:right}.price{font-size:calc(32 * var(--rpx));font-weight:800;color:#9a491a}.price text{font-size:calc(20 * var(--rpx));font-weight:500}
+.redeem{margin-top:calc(8 * var(--rpx));padding:calc(10 * var(--rpx)) calc(16 * var(--rpx));min-width:calc(132 * var(--rpx));font-size:calc(24 * var(--rpx))}.redeem[disabled]{background:#f2e9dc;color:#795f48}
+
