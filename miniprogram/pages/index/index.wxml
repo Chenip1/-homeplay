@@ -1,0 +1,60 @@
+<view class="page-shell" wx:if="{{state}}">
+  <view class="home-frame">
+    <image class="bg shot-layer" src="{{yard}}" mode="aspectFill" data-kind="cover" data-src="{{yard}}" />
+
+    <view class="petStage">
+      <view class="petPortrait shot-layer" wx:if="{{!dog3D && portrait}}" data-kind="portrait" data-src="{{atlas}}" data-slot="{{portrait.portrait}}">
+        <image class="petAtlas" src="{{atlas}}" mode="scaleToFill" style="left:{{portrait.offsetX}}%; top:{{portrait.offsetY}}%;" />
+      </view>
+      <image wx:elif="{{!dog3D}}" class="pet shot-layer" src="{{starterArt}}" mode="aspectFit" data-kind="image" data-src="{{starterArt}}" />
+      <canvas type="webgl" id="dogCanvas" class="dogCanvas {{dog3D ? 'shot-layer' : 'dogHidden'}}"
+        data-kind="{{portrait ? 'portrait' : 'image'}}" data-dog-model="{{true}}"
+        data-src="{{portrait ? atlas : starterArt}}" data-slot="{{portrait.portrait}}" />
+      <view class="dogTarget {{dressingTarget ? 'dressReady' : ''}}">
+        <text wx:if="{{dressingTarget}}">松手穿戴</text>
+      </view>
+    </view>
+
+    <view class="yardDropZone">
+      <image wx:for="{{yardItems}}" wx:key="id"
+        class="yardItem shot-layer {{draggingId === item.id ? 'dragging' : ''}}"
+        src="{{item.image}}" mode="aspectFit" data-kind="image" data-src="{{item.image}}"
+        aria-label="{{item.name}}" data-id="{{item.id}}"
+        style="left:{{item.left}}%; top:{{item.top}}%;"
+        catchtouchstart="startItemDrag" catchtouchmove="dragItem"
+        catchtouchend="finishItemDrag" catchtouchcancel="cancelItemDrag" />
+    </view>
+
+    <view class="petStatus shot-layer {{petAlerts.moodLow || petAlerts.hungerLow ? 'petStatusAlert' : ''}}" data-kind="box">
+      <view class="statusHeader" bindtap="renamePet" aria-role="button" aria-label="修改狗狗昵称">
+        <text class="statusName shot-layer" data-kind="text" data-text="{{petName}}">{{petName}}</text>
+        <text class="editMark shot-layer" data-kind="text" data-text="✎">✎</text>
+      </view>
+      <view class="statusWarn shot-layer" wx:if="{{petAlerts.message}}" data-kind="text" data-text="{{petAlerts.message}}">{{petAlerts.message}}</view>
+
+      <view class="statusRow" wx:for="{{statusRows}}" wx:key="id">
+        <view class="statusMain">
+          <view class="statusMeta">
+            <text class="statusTitle shot-layer" data-kind="text" data-text="{{item.label}}">{{item.label}}</text>
+            <text class="statusValue shot-layer {{item.low ? 'statusLow' : ''}}" data-kind="text" data-text="{{item.summary}}">{{item.summary}}</text>
+          </view>
+          <view class="statusBar shot-layer" data-kind="box">
+            <view class="statusFill shot-layer {{item.low ? 'alertFill' : item.id + 'Fill'}}" style="width: {{item.value}}%;" data-kind="box" />
+          </view>
+        </view>
+        <view class="plusBtn shot-layer" bindtap="useStatusSupply" data-stat="{{item.id}}" data-kind="button" data-text="+" aria-role="button">+</view>
+      </view>
+    </view>
+
+    <view wx:for="{{toolGroups}}" wx:for-item="group" wx:key="side" class="homeMenu {{group.side}}">
+      <view class="homeTool" wx:for="{{group.tools}}" wx:for-item="tool" wx:key="id" bindtap="{{tool.handler}}" aria-role="button" aria-label="{{tool.label}}">
+        <image class="toolIcon shot-layer {{tool.id === 'music' && !musicOn ? 'mutedIcon' : ''}}" src="{{tool.src}}" mode="aspectFit" data-kind="image" data-src="{{tool.src}}" />
+        <text class="toolLabel shot-layer" data-kind="text" data-text="{{tool.label}}">{{tool.label}}</text>
+        <text class="badge shot-layer" wx:if="{{tool.id === 'messages' && unread}}" data-kind="button" data-text="{{unread}}">{{unread}}</text>
+      </view>
+    </view>
+    <canvas type="2d" id="homeCapture" class="captureCanvas" />
+  </view>
+</view>
+
+<view wx:else class="loading">加载中…</view>

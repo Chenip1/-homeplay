@@ -1,0 +1,43 @@
+<view class="wrap">
+  <view class="panel">
+    <view class="panelHeader">
+      <view class="panelTitle">{{labels.title}}</view>
+      <button class="lobbyBtn" bindtap="returnToLobby">‹ 返回游戏大厅</button>
+    </view>
+    <view class="hud">
+      <view class="hudItem">
+        <view class="hudLabel">{{labels.time}}</view>
+        <view class="hudValue">{{timeLeft}}s</view>
+      </view>
+      <view class="hudItem">
+        <view class="hudLabel">{{labels.score}}</view>
+        <view class="hudValue">{{score}}</view>
+      </view>
+      <view class="hudItem">
+        <view class="hudLabel">{{labels.totalScore}}</view>
+        <view class="hudValue">{{totalScore}}</view>
+      </view>
+    </view>
+  </view>
+
+  <canvas
+    type="2d"
+    id="gameCanvas"
+    class="canvas"
+    bindtouchstart="onTouch"
+    bindtouchmove="onTouch"
+  ></canvas>
+
+  <view class="btns">
+    <button class="primary" bindtap="startGame" disabled="{{running || !ready}}">
+      {{ready ? buttonLabels.start : buttonLabels.loading}}
+    </button>
+    <button class="secondary" bindtap="stopGame" disabled="{{!running}}">
+      {{buttonLabels.stop}}
+    </button>
+  </view>
+
+  <view class="tips">
+    <text>{{labels.tips}}</text>
+  </view>
+</view>

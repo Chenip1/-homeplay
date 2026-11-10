@@ -1,0 +1,32 @@
+<view class="play">
+  <view class="hero shop-hero">
+    <view><view class="eyebrow">萌宠补给站</view><view class="title">道具商店</view><view class="muted">6 个分类 · {{total}} 件好物</view></view>
+    <view class="score-box"><view class="muted">可用积分</view><view class="score">{{score}}</view></view>
+  </view>
+
+  <button class="dex-entry" bindtap="openDogDex">
+    <view class="dex-thumb"><image src="{{atlas}}" mode="scaleToFill"/></view>
+    <view class="dex-label"><view class="name">狗狗图鉴</view><view class="muted">解锁更多狗狗 · 已点亮 {{dogCount}} / {{dogTotal}}</view></view>
+    <text class="chevron">›</text>
+  </button>
+
+  <view class="categories">
+    <button wx:for="{{categories}}" wx:key="id" class="category {{active.id === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectCategory">
+      <text class="category-icon">{{item.icon}}</text><text>{{item.name}}</text>
+    </button>
+  </view>
+
+  <view class="section"><text class="name">{{active.name}}</text><text class="muted">{{items.length}} 件商品</text></view>
+
+  <view class="card product" wx:for="{{items}}" wx:key="id">
+    <view class="product-main">
+      <view class="name">{{item.name}}</view>
+      <view class="muted">{{item.effectText}}</view>
+      <view class="owned">已拥有 {{item.owned}}</view>
+    </view>
+    <view class="product-side">
+      <view class="price">{{item.price}} <text>积分</text></view>
+      <button class="action redeem" bindtap="buy" data-id="{{item.id}}" disabled="{{score < item.price}}">{{score < item.price ? '积分不足' : '兑换'}}</button>
+    </view>
+  </view>
+</view>

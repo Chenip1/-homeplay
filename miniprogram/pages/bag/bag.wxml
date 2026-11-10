@@ -1,0 +1,30 @@
+<view class="play">
+  <button class="quiet back" bindtap="goBack">‹ 返回首页</button>
+  <view class="hero">
+    <view class="eyebrow">我的小窝道具</view>
+    <view class="title">萌宠背包</view>
+    <view class="muted">点「使用」把道具摆到首页，再拖动到喜欢的位置。已摆放 {{placedCount}} 件。</view>
+  </view>
+  <view class="card" wx:if="{{!items.length}}">
+    <view class="name">背包空空的</view>
+    <view class="muted">在道具商店兑换的物品会放到这里。</view>
+    <button class="action" bindtap="goShop">去道具商店</button>
+  </view>
+  <view class="card bag-item" wx:for="{{items}}" wx:key="id">
+    <view class="bag-details">
+      <image class="item-art" src="{{item.image}}" mode="aspectFit" lazy-load="{{true}}" />
+      <view class="item-info">
+        <view class="name">{{item.name}}</view>
+        <view class="muted">{{item.category}} · {{item.price}} 积分</view>
+        <view class="muted">背包 {{item.count}} 件 · 已摆放 {{item.placed}} 件</view>
+        <view class="muted" wx:if="{{item.wearing}}">当前狗狗穿戴中</view>
+        <view class="muted" wx:elif="{{item.wearable}}">摆放后可拖到狗狗身上穿戴</view>
+      </view>
+    </view>
+    <view class="row">
+      <button class="action" data-id="{{item.id}}" bindtap="useItem" disabled="{{!item.count}}">使用</button>
+      <button class="quiet" wx:if="{{item.placed}}" data-id="{{item.id}}" bindtap="collect">收回一件</button>
+      <button class="quiet" wx:if="{{item.wearing}}" data-id="{{item.id}}" bindtap="undress">脱下</button>
+    </view>
+  </view>
+</view>

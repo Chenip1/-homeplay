@@ -1,0 +1,6 @@
+node_modules/
+web/dist/
+project.private.config.json
+.env*
+*.tar.gz
+web/.openai/

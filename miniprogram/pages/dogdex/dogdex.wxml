@@ -1,0 +1,27 @@
+<view class="play">
+  <button class="quiet back" bindtap="goBack">‹ 返回道具商店</button>
+  <view class="hero">
+    <view class="eyebrow">萌宠收藏册</view>
+    <view class="title">狗狗图鉴</view>
+    <view class="dex-stats"><text>已点亮 {{count}} / {{total}} 种</text><text>可用 {{score}} 积分</text></view>
+    <progress percent="{{100 * count / total}}" stroke-width="6" border-radius="10" activeColor="#aa5b2d" backgroundColor="#fff5e5"/>
+  </view>
+
+  <block wx:for="{{groups}}" wx:for-item="group" wx:key="id">
+    <view class="tier"><text class="name">{{group.name}}</text><text class="muted">{{group.count}} / {{group.dogs.length}} 已点亮</text></view>
+    <view class="dex-grid">
+      <view class="card breed" wx:for="{{group.dogs}}" wx:for-item="dog" wx:key="id">
+        <view class="portrait"><image class="atlas" src="{{atlas}}" mode="scaleToFill" style="left: {{dog.offsetX}}%; top: {{dog.offsetY}}%;"/></view>
+        <view class="breed-info">
+          <view class="breed-name">{{dog.name}}</view>
+          <view class="breed-status {{dog.owned ? 'owned' : ''}}">{{dog.current ? '陪伴中' : dog.owned ? '已点亮' : '未解锁'}}</view>
+        </view>
+        <view class="breed-cost" wx:if="{{!dog.price}}">开局赠送</view>
+        <view class="breed-cost" wx:elif="{{!dog.owned}}">{{dog.price}} 积分</view>
+        <view class="breed-cost" wx:else>可免费切换</view>
+        <button wx:if="{{!dog.owned}}" class="action dex-button" disabled="{{!dog.affordable}}" data-id="{{dog.id}}" bindtap="unlock">{{dog.affordable ? '解锁' : '积分不足'}}</button>
+        <button wx:else class="quiet dex-button" disabled="{{dog.current}}" data-id="{{dog.id}}" bindtap="switchPet">{{dog.current ? '当前萌宠' : '设为陪伴'}}</button>
+      </view>
+    </view>
+  </block>
+</view>

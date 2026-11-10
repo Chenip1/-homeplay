@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/pet/pet",
+    "pages/game/game",
+    "pages/mall/mall",
+    "pages/region/region",
+    "pages/profile/profile",
+    "pages/messages/messages",
+    "pages/catch/catch",
+    "pages/pk/pk",
+    "pages/dogdex/dogdex",
+    "pages/album/album",
+    "pages/bag/bag"
+  ],
+  "window": {
+    "navigationBarTitleText": "萌宠homePlay",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/game/game",
+        "text": "游戏"
+      },
+      {
+        "pagePath": "pages/mall/mall",
+        "text": "商店"
+      },
+      {
+        "pagePath": "pages/region/region",
+        "text": "地区"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  }
+}
+
+

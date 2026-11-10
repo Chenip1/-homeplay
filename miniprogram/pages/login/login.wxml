@@ -1,0 +1,9 @@
+<view class="wrap">
+  <!-- 全屏背景图 -->
+  <image class="bg" src="/assets/login-nest-cropped.jpg" mode="aspectFill" />
+
+  <!-- 底部按钮层 -->
+  <view class="bottom">
+    <button class="btn" bindtap="start">开启你的萌宠play之旅</button>
+  </view>
+</view>

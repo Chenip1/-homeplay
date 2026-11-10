@@ -1,0 +1,22 @@
+<view class="play">
+  <view class="hero"><view class="eyebrow">萌宠游乐场</view><view class="title">{{mode === 'link' ? '狗粮连连看' : mode === 'quiz' ? '狗狗知识挑战' : '今天玩什么？'}}</view><view class="muted">我的积分 · {{total}}</view></view>
+  <block wx:if="{{!mode}}">
+    <view class="card entry" bindtap="choose" data-mode="link"><text class="badge">🦴</text><view><view class="name">狗粮连连看</view><view class="muted">连成一对，清空狗粮盘</view></view><text class="chevron">›</text></view>
+    <view class="card entry" bindtap="choose" data-mode="quiz"><text class="badge mint">💡</text><view><view class="name">狗狗知识挑战</view><view class="muted">五道题，测测你有多懂狗狗</view></view><text class="chevron">›</text></view>
+    <view class="card entry" bindtap="choose" data-mode="catch"><text class="badge blue">🧺</text><view><view class="name">接狗粮</view><view class="muted">拖动篮子，接住掉下来的狗粮</view></view><text class="chevron">›</text></view>
+  </block>
+  <block wx:else>
+    <button class="quiet back" bindtap="menu">‹ 返回游戏大厅</button>
+    <view class="card" wx:if="{{!result && mode === 'link'}}">
+      <view class="name">还剩 {{pairs}} 对</view><view class="muted">相同图案之间最多拐两次，可从边缘绕行。</view>
+      <view class="link-board"><view wx:for="{{board}}" wx:key="index" class="tile {{!item ? 'empty' : ''}} {{selected === index || hints[0] === index || hints[1] === index ? 'lit' : ''}}" bindtap="pick" data-i="{{index}}">{{item}}</view></view>
+      <view class="row"><button class="quiet" bindtap="showHint">提示</button><button class="quiet" bindtap="reshuffle">重排</button></view><view class="muted notice">{{notice}}</view>
+    </view>
+    <view class="card" wx:if="{{!result && mode === 'quiz'}}">
+      <view class="eyebrow">第 {{index + 1}} / 5 题</view><view class="name question">{{question[0]}}</view>
+      <button class="choice" wx:for="{{question[1]}}" wx:key="*this" data-i="{{index}}" bindtap="answer" disabled="{{!!feedback}}">{{item}}</button>
+      <view wx:if="{{feedback}}"><view class="notice">{{feedback}}</view><button class="action" bindtap="advance">{{index === 4 ? '查看成绩' : '下一题'}}</button></view>
+    </view>
+    <view class="card" wx:if="{{result}}"><view class="name">{{result}}</view><button class="action" bindtap="restart">再玩一次</button></view>
+  </block>
+</view>

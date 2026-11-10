@@ -1,0 +1,7 @@
+@import "../../styles/play.wxss";
+
+.bag-details{display:flex;align-items:center;gap:18rpx}
+.item-art{width:112rpx;height:112rpx;flex-shrink:0;background:#fbf1e1;border-radius:18rpx}
+.item-info{min-width:0}
+.bag-item .row button[disabled]{background:#f0e7dc;color:#795f48}
+

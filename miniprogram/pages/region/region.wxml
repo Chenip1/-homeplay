@@ -1,0 +1,29 @@
+<view class="play">
+  <view class="hero"><view class="eyebrow">地区 · PK 专区</view><view class="title">{{visit ? '串门时间' : '萌宠小窝大厅'}}</view><view class="muted">拜访公开且在线的小窝，等大家同意后一起开玩。</view></view>
+  <view class="card" wx:if="{{error}}"><view>{{error}}</view><button class="quiet" bindtap="retry">重新连接</button></view>
+  <block wx:if="{{visit}}">
+    <button class="quiet back" bindtap="back">‹ 返回地区大厅</button>
+    <view class="card">
+      <image class="nest-cover" src="/assets/home_nest.png" mode="aspectFit"/>
+      <view class="name">{{visit.name}}的小窝</view><view class="muted">在线 · {{visit.pet}} · {{visit.city || '地区未设置'}}</view>
+    </view>
+    <view class="card">
+      <view class="name">发起 PK</view>
+      <view class="mode-grid"><button wx:for="{{modes}}" wx:key="key" class="quiet {{mode.key === item.key ? 'chosen' : ''}}" bindtap="choose" data-i="{{index}}">{{item.name}} · {{item.size}} 人</button></view>
+      <view class="muted">已邀请 {{selected.length}} / {{need}} 位玩家{{need > 1 ? '，请从下方再选队友' : ''}}</view>
+      <block wx:if="{{need > 1}}">
+        <button wx:for="{{nests}}" wx:key="key" wx:if="{{item.key !== visit.key}}" class="quiet" bindtap="toggleGuest" data-key="{{item.key}}">{{item.name}}<text wx:if="{{selected[1] === item.key || selected[2] === item.key}}"> · 已选</text></button>
+      </block>
+      <button class="action" bindtap="invite" disabled="{{busy || selected.length !== need}}">发送邀请</button>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="card" wx:if="{{rooms.length}}">
+      <view class="name">我的邀请与对局</view>
+      <button wx:for="{{rooms}}" wx:key="id" class="quiet" data-id="{{item.id}}" bindtap="openRoom">{{item.players[0].name}} · {{item.modeName}} · {{item.status === 'playing' ? '对局中' : item.players[item.seat].accepted ? '等待开局' : '待确认'}}</button>
+    </view>
+    <view class="row filters"><button class="quiet" bindtap="toggleLocal">{{local ? '正在看同城 · 切换全部' : '全部地区 · 筛选同城'}}</button><button class="quiet" bindtap="profile">我的小窝设置</button></view>
+    <view class="card entry" wx:for="{{visible}}" wx:key="key" bindtap="visitNest" data-key="{{item.key}}"><text class="badge mint">🏡</text><view><view class="name">{{item.name}}的小窝</view><view class="muted">在线 · {{item.city || '地区未设置'}} · {{item.pet}}</view></view><text class="chevron">›</text></view>
+    <view class="card muted" wx:if="{{!visible.length && !error}}">{{loaded ? '现在没有符合条件的小窝。晚点再来串门吧！' : '正在寻找在线小窝…'}}</view>
+  </block>
+</view>

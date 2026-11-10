@@ -1,0 +1,56 @@
+@import "../../styles/play.wxss";
+
+.wrap { padding: 16px; }
+
+.top {
+  padding: 14px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  margin-bottom: 12px;
+}
+.score { font-size: 16px; }
+.scoreNum { font-weight: 700; }
+.current { margin-top: 6px; color: #444; }
+
+.list { margin-bottom: 12px; }
+.item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+.item.selected {
+  border-color: #111;
+}
+.breed-label {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  min-width: 0;
+}
+.breed-avatar {
+  position: relative;
+  width: 72rpx;
+  height: 90rpx;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 14rpx;
+  background: #fff5e5;
+}
+.breed-atlas {
+  position: absolute;
+  width: 500%;
+  height: 400%;
+}
+.name { font-size: 16px; font-weight: 600; }
+.price { color: #666; flex-shrink: 0; margin-left: 16rpx; }
+
+.switch-companion { text-align: center; }
+
+.hint { margin-top: 8px; color: #888; font-size: 12px; line-height: 18px; }

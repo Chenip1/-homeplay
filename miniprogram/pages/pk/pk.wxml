@@ -1,0 +1,77 @@
+<view class="play">
+  <button class="quiet back" bindtap="lobby">‹ 返回地区大厅</button>
+  <view class="hero"><view class="eyebrow">小窝对战</view><view class="title">{{room.modeName || 'PK 房间'}}</view><view class="muted">{{rule}}</view></view>
+  <view class="card" wx:if="{{error || !room}}"><view>{{error || '正在打开房间…'}}</view><button class="quiet" wx:if="{{error}}" bindtap="refresh">重新连接</button></view>
+  <block wx:if="{{room}}">
+    <view class="card">
+      <view wx:for="{{room.players}}" wx:key="index" class="seat">
+        <text>{{item.name}}{{index === room.seat ? '（你）' : ''}}</text>
+        <text class="muted" wx:if="{{room.status === 'waiting'}}">{{item.accepted ? '已同意' : '待确认'}}{{item.pet ? ' · ' + item.pet : ''}}</text>
+        <text class="muted" wx:elif="{{room.mode === 'quiz' && room.game}}">{{room.game.progress[index].count}} / 5 题{{room.status === 'done' ? ' · 答对 ' + room.game.progress[index].correct : ''}}</text>
+        <text class="muted" wx:elif="{{room.mode === 'race'}}">{{item.pet}}</text>
+        <text class="muted" wx:elif="{{room.game.counts}}">{{room.game.landlord === index ? '地主 · ' : room.game.landlord >= 0 ? '农民 · ' : ''}}{{room.game.counts[index]}} 张</text>
+        <text class="muted" wx:elif="{{room.mode === 'gomoku'}}">{{index === 0 ? '黑棋' : '白棋'}}</text>
+      </view>
+    </view>
+    <view class="card" wx:if="{{room.status === 'waiting'}}">
+      <block wx:if="{{!room.players[room.seat].accepted}}">
+        <view class="name">{{room.players[0].name}} 邀请你一起玩</view>
+        <view class="row"><button class="action" bindtap="accept" disabled="{{pending}}">接受 PK</button><button class="quiet" bindtap="decline" disabled="{{pending}}">婉拒</button></view>
+      </block>
+      <block wx:else>
+        <view class="name">{{ready ? '大家都准备好了' : '等待玩家准备'}}</view>
+        <block wx:if="{{room.mode === 'race'}}">
+          <picker range="{{pets}}" bindchange="setPet" disabled="{{pending}}"><view class="choice">参赛萌宠 · {{racePet || '点这里选择'}} ›</view></picker>
+          <picker wx:if="{{room.seat === 0}}" range="{{room.maps}}" value="{{mapIndex}}" bindchange="setMap" disabled="{{pending}}"><view class="choice">地图 · {{room.mapName}} ›</view></picker>
+          <view class="muted" wx:else>地图 · {{room.mapName}}（由发起人选择）</view>
+          <button class="action" wx:if="{{room.seat === 0}}" bindtap="start" disabled="{{pending || !ready}}">开始闯关</button>
+        </block>
+        <button class="quiet" bindtap="cancel" disabled="{{pending}}">取消本场邀请</button>
+      </block>
+    </view>
+    <block wx:elif="{{room.status === 'playing'}}">
+      <view class="card" wx:if="{{room.mode === 'gomoku'}}">
+        <view class="name">{{myTurn ? '轮到你落子' : '等待对手落子'}}</view>
+        <view class="gomoku"><view wx:for="{{room.game.board}}" wx:key="index" class="square" data-i="{{index}}" bindtap="place"><view wx:if="{{item}}" class="stone {{item === 1 ? 'black' : 'white'}}"/></view></view>
+      </view>
+      <view class="card" wx:elif="{{room.mode === 'quiz'}}">
+        <view class="eyebrow">剩余 {{seconds}} 秒</view>
+        <block wx:if="{{room.game.question}}">
+          <view class="name question">{{room.game.index + 1}} / 5 · {{room.game.question.text}}</view>
+          <button class="choice" wx:for="{{room.game.question.options}}" wx:key="*this" data-i="{{index}}" bindtap="answer" disabled="{{pending || !seconds}}">{{item}}</button>
+        </block>
+        <view wx:else class="name">已完成，等待对方交卷</view>
+      </view>
+      <view class="card" wx:elif="{{room.mode === 'race'}}">
+        <view class="name">{{room.mapName}} · {{seconds ? seconds + ' 秒后出发' : '跑向终点！'}}</view>
+        <view class="muted">🐶 你　🐕 对手　🐾 同一格</view>
+        <view class="track"><view wx:for="{{grid}}" wx:key="id" class="track-cell {{item.wall ? 'wall' : ''}}">{{item.label}}</view></view>
+        <view id="joystick" class="joystick" catchtouchstart="joystickStart" catchtouchmove="joystickMove" catchtouchend="stopJoystick" catchtouchcancel="stopJoystick">
+          <text class="up">▲</text><text class="down">▼</text><text class="left">◀</text><text class="right">▶</text><view class="knob" style="transform:translate({{joyX}}px,{{joyY}}px)"/>
+        </view>
+      </view>
+      <view class="card" wx:else>
+        <view class="name">{{myTurn ? '轮到你了' : '等待 ' + room.players[room.game.turn].name}}</view>
+        <block wx:if="{{room.mode === 'cards'}}">
+          <view class="muted" wx:if="{{room.game.landlord < 0}}">叫地主 · 当前最高 {{room.game.bid}} 分</view>
+          <view class="muted" wx:else>底牌 · {{bottom}}<view>{{last || '新一轮，自由出牌'}}</view></view>
+        </block>
+        <block wx:else>
+          <view class="muted">牌墙剩余 {{room.game.remaining}} 张</view>
+          <view wx:for="{{discards}}" wx:key="i" class="muted">{{item.name}}：{{item.tiles || '尚未弃牌'}}</view>
+        </block>
+        <view class="hand"><button wx:for="{{hand}}" wx:key="id" class="face {{item.selected ? 'chosen' : ''}}" data-i="{{item.id}}" bindtap="pickCard" disabled="{{!myTurn || pending}}">{{item.label}}</button></view>
+        <block wx:if="{{myTurn}}">
+          <view class="row" wx:if="{{room.mode === 'cards' && room.game.landlord < 0}}"><button wx:for="{{bids}}" wx:key="*this" class="quiet" data-i="{{item}}" bindtap="bid" disabled="{{pending}}">{{item ? item + ' 分' : '不叫'}}</button></view>
+          <view class="row" wx:elif="{{room.mode === 'cards'}}"><button class="action" bindtap="playCards" disabled="{{pending || !picked.length}}">出牌</button><button class="quiet" bindtap="pass" disabled="{{pending || !room.game.last}}">不要</button></view>
+          <view class="row" wx:else><button class="action" bindtap="discard" disabled="{{pending || !picked.length}}">打出</button><button class="quiet" bindtap="hu" disabled="{{pending || !room.game.canHu}}">自摸</button></view>
+        </block>
+      </view>
+      <button class="quiet" bindtap="leave" disabled="{{pending}}">结束对局</button>
+    </block>
+    <view class="card" wx:else>
+      <view class="name">{{room.status === 'done' ? room.game.result : room.status === 'declined' ? '有玩家婉拒了邀请' : room.status === 'cancelled' ? '邀请已取消' : '房间已过期'}}</view>
+      <button class="action" bindtap="lobby">返回地区大厅</button>
+    </view>
+  </block>
+</view>

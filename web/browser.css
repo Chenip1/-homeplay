@@ -1,0 +1,42 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; min-height: 100%; }
+body { background: #2c2319; color: #503522; font: 15px system-ui, "Microsoft YaHei", sans-serif; }
+#app {
+  --rpx: calc(min(100vw, 480px) / 750);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 480px);
+  height: 100dvh;
+  margin: auto;
+  background: #fcf4e8;
+}
+#page { position: relative; flex: 1; min-height: 0; overflow: auto; width: 100%; }
+view, scroll-view { display: block; }
+img { vertical-align: middle; user-select: none; -webkit-user-drag: none; }
+button, input, select { font: inherit; color: inherit; }
+button { display: block; width: 100%; margin: 0 auto; padding: 0 14px; border: 0; border-radius: 6px; background: #f6ebdc; cursor: pointer; }
+button:disabled { opacity: .55; cursor: default; }
+[role="button"] { cursor: pointer; }
+canvas[data-pointer], img[data-pointer], view[data-pointer] { touch-action: none; }
+#tabs { display: flex; flex: none; padding-bottom: env(safe-area-inset-bottom); border-top: 1px solid #eadbc8; background: #fff8ec; }
+#tabs button { position: relative; flex: 1; min-height: 51px; background: none; border-radius: 0; }
+#tabs button[aria-current="page"] { color: #a95722; font-weight: 750; box-shadow: inset 0 3px #cf8b53; }
+#tabs sup { position: absolute; top: 3px; right: 11%; background: #ac403c; color: white; padding: 1px 4px; border-radius: 10px; }
+#app[data-route="login"] .wrap, #app[data-route="login"] .bg, #app[data-route="login"] .bottom { position: absolute; }
+#app[data-route="index"] { --rpx: calc(min(100vw, 480px, (100dvh - 52px - env(safe-area-inset-bottom)) * .5625) / 750); }
+#app[data-route="index"] #page, #app[data-route="index"] .page-shell { width: 100%; height: 100%; }
+#app[data-route="index"] .home-frame { width: calc(750 * var(--rpx)); height: auto; aspect-ratio: 9 / 16; }
+#app[data-route="catch"] canvas { display: block; }
+.web-picker { position: relative; display: block; }
+.web-picker select { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.web-switch { width: 2rem; height: 1.15rem; accent-color: #a95722; }
+#toast { position: fixed; z-index: 10; bottom: 74px; left: 50%; transform: translateX(-50%); max-width: 90vw; background: #432e22; color: white; padding: 10px 16px; border-radius: 10px; text-align: center; }
+#dialog { border: none; border-radius: 20px; background: #fffaf1; color: #503522; padding: 22px; width: min(360px, 92vw); }
+#dialog::backdrop { background: #21170da0; }
+#dialog p { white-space: pre-line; }
+#dialog input { display: block; width: 100%; margin: 12px 0; padding: 8px; }
+#dialog .controls { display: flex; gap: 10px; margin-top: 16px; }
+#dialog button { padding: 9px; }
+#dialog img { width: 100%; max-height: 65vh; object-fit: contain; }

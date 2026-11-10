@@ -1,0 +1,23 @@
+<view class="play">
+  <button wx:if="{{returnToRegion}}" class="quiet back" bindtap="backToRegion">‹ 返回地区大厅</button>
+  <view class="hero"><view class="eyebrow">我的萌宠手账</view><view class="title">{{nickname}}</view><view class="muted">当前陪伴 · {{current}}　｜　{{score}} 积分</view></view>
+  <view class="card">
+    <view class="name">我的狗狗 · {{dogCount}} 种</view>
+    <view class="pet-line" wx:for="{{dogs}}" wx:key="breedId"><text>🐶 {{item.breedName}}</text><text class="muted">{{item.current ? '陪伴中' : item.date}}</text></view>
+    <view wx:if="{{!dogs.length}}" class="muted">还没有狗狗记录。</view>
+    <block wx:if="{{others.length}}"><view class="name subsection">其他萌宠</view><view class="pet-line" wx:for="{{others}}" wx:key="breedId"><text>🐱 {{item.breedName}}</text><text class="muted">{{item.current ? '陪伴中' : item.date}}</text></view></block>
+    <button class="quiet" bindtap="manage">管理萌宠</button>
+  </view>
+  <view class="card">
+    <view class="name">管理记录</view>
+    <view wx:for="{{history}}" wx:key="id" class="pet-line"><text>{{item.action}} · {{item.breedName}}</text><text class="muted">{{item.date}}</text></view>
+    <view wx:if="{{!history.length}}" class="muted">领养或切换萌宠后，记录会显示在这里。</view>
+  </view>
+  <view class="card">
+    <view class="name">串门设置</view>
+    <view class="row"><input class="nickname" maxlength="16" value="{{nickname}}" bindinput="nicknameInput" placeholder="小窝主人昵称"/><button class="quiet" bindtap="saveName">保存昵称</button></view>
+    <picker mode="region" bindchange="setRegion"><view class="pet-line"><text>我的地区</text><text class="muted">{{region}} ›</text></view></picker>
+    <view class="pet-line"><text>在线时公开小窝</text><switch checked="{{open}}" bindchange="setOpen" color="#a95722"/></view>
+    <view class="muted">公开后，其他玩家可以串门并发起邀请。你同意后才会开始 PK。</view>
+  </view>
+</view>

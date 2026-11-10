@@ -1,0 +1,41 @@
+<view class="wrap" wx:if="{{state}}">
+  <button class="quiet back" bindtap="goBack">‹ 返回我的</button>
+  <!-- 顶部用户信息 -->
+  <view class="top">
+    <view class="score">当前积分：<text class="scoreNum">{{state.user.score}}</text></view>
+    <view class="current">当前陪伴：{{state.pet.type === 'dog' ? state.pet.breedName : '请选择一只狗狗'}}</view>
+  </view>
+
+  <!-- 品种列表 -->
+  <view class="list">
+    <view
+      class="item {{state.pet.breedId === item.id ? 'selected' : ''}}"
+      wx:for="{{breeds}}"
+      wx:key="id"
+      data-breedid="{{item.id}}"
+      bindtap="selectBreed"
+    >
+      <view class="breed-label">
+        <view class="breed-avatar">
+          <image class="breed-atlas" src="{{atlas}}" mode="scaleToFill" style="left: {{item.offsetX}}%; top: {{item.offsetY}}%;"/>
+        </view>
+        <view class="name">{{item.name}}</view>
+      </view>
+      <view class="price">
+        <text wx:if="{{state.pet.breedId === item.id}}">陪伴中</text>
+        <text wx:elif="{{state.ownedPets[item.id]}}">已拥有</text>
+        <text wx:elif="{{item.price === 0}}">免费领养</text>
+        <text wx:else>{{item.price}} 积分</text>
+      </view>
+    </view>
+  </view>
+
+  <picker mode="selector" range="{{breedChoices}}" value="{{0}}" bindchange="pickBreed">
+    <view class="action switch-companion" aria-role="button">切换陪伴萌宠</view>
+  </picker>
+
+  <!-- 提示 -->
+  <view class="hint">
+    <text>领养过的萌宠会保存在「我的」里，切换时无需再次花费积分。</text>
+  </view>
+</view>
