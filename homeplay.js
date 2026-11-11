@@ -1847,12 +1847,20 @@ Page({
   },
 
   onReady() {
+    this.resizeCanvas()
+  },
+
+  onResize() {
+    if (this.data.ready) this.resizeCanvas()
+  },
+
+  resizeCanvas() {
     const q = wx.createSelectorQuery().in(this)
     q.select("#gameCanvas")
       .fields({ node: true, size: true })
       .exec((res     ) => {
         const info = res && res[0]
-        if (!info || !info.node) {
+        if (!info || !info.node || info.width <= 0 || info.height <= 0) {
           wx.showToast({ title: "\u521d\u59cb\u5316\u753B\u5E03\u5931\u8D25", icon: "none" })
           return
         }
@@ -1865,6 +1873,9 @@ Page({
         }
 
         const dpr = wx.getSystemInfoSync().pixelRatio
+        const previousWidth = this.W
+        const previousHeight = this.H
+        const basketCenter = this.basket ? this.basket.x + this.basket.w / 2 : previousWidth / 2
         this.W = info.width
         this.H = info.height
 
@@ -1875,16 +1886,27 @@ Page({
         this.canvas = canvas
         this.ctx = ctx
         this.resetBasket()
-        this.setData({ ready: true })
-        this.drawSplash()
+        if (previousWidth > 0) {
+          const horizontalScale = this.W / previousWidth
+          const verticalScale = this.H / previousHeight
+          this.basket.x = clamp(basketCenter * horizontalScale - this.basket.w / 2, 0, this.W - this.basket.w)
+          for (const food of this.foods) {
+            food.x *= horizontalScale
+            food.y *= verticalScale
+          }
+        }
+        if (!this.data.ready) this.setData({ ready: true })
+        if (this.data.running) this.drawFrame()
+        else this.drawSplash()
       })
   },
 
   resetBasket() {
+    const width = Math.min(112, this.W)
     this.basket = {
-      x: (this.W - 112) / 2,
+      x: (this.W - width) / 2,
       y: this.H - 46,
-      w: 112,
+      w: width,
       h: 18
     }
   },
@@ -1895,9 +1917,9 @@ Page({
     const ctx = this.ctx
     ctx.fillStyle = "rgba(61, 45, 27, 0.85)"
     ctx.font = "bold 18px sans-serif"
-    ctx.fillText("\u70B9\u51FB\u300C\u5F00\u59CB\u6E38\u620F\u300D", 20, 36)
+    ctx.fillText("\u70B9\u51FB\u300C\u5F00\u59CB\u6E38\u620F\u300D", 20, 36, this.W - 40)
     ctx.font = "14px sans-serif"
-    ctx.fillText("10s \u5185\u6BCF\u63A5\u4F4F\u4E00\u4E2A\u72D7\u7CAE +5 \u79EF\u5206", 20, 60)
+    ctx.fillText("10s \u5185\u6BCF\u63A5\u4F4F\u4E00\u4E2A\u72D7\u7CAE +5 \u79EF\u5206", 20, 60, this.W - 40)
   },
 
   startGame() {

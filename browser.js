@@ -319,7 +319,6 @@ function boot({ tabs, templates, modules }) {
     const name = route.split('/').at(-1)
     app.dataset.route = name
     const stylesheet = './' + name + '.css'
-    styles.href = stylesheet
     outlet.replaceChildren()
     outlet.scrollTop = 0
     updateTabs()
@@ -334,8 +333,12 @@ function boot({ tabs, templates, modules }) {
       render(page)
       page.onReady?.()
     }
-    styles.onload = ready
-    if (styles.sheet) requestAnimationFrame(ready)
+    if (styles.getAttribute('href') === stylesheet && styles.sheet) {
+      requestAnimationFrame(ready)
+    } else {
+      styles.onload = ready
+      styles.href = stylesheet
+    }
   }
 
   const definitions = new Map()
