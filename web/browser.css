@@ -28,7 +28,12 @@ canvas[data-pointer], img[data-pointer], view[data-pointer] { touch-action: none
 #app[data-route="index"] { --rpx: calc(min(100vw, 480px, (100dvh - 52px - env(safe-area-inset-bottom)) * .5625) / 750); }
 #app[data-route="index"] #page, #app[data-route="index"] .page-shell { width: 100%; height: 100%; }
 #app[data-route="index"] .home-frame { width: calc(750 * var(--rpx)); height: auto; aspect-ratio: 9 / 16; }
-#app[data-route="catch"] canvas { display: block; }
+#app[data-route="catch"] .wrap { width: 100%; height: 100%; min-height: 360px; }
+#app[data-route="catch"] .panelTitle { white-space: nowrap; }
+#app[data-route="catch"] .lobbyBtn { width: auto; flex: none; }
+#app[data-route="catch"] .hudItem { min-width: 0; }
+#app[data-route="catch"] canvas { display: block; flex: 1 1 0; min-height: 140px; }
+#app[data-route="catch"] .btns button { min-height: 40px; }
 .web-picker { position: relative; display: block; }
 .web-picker select { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
 .web-switch { width: 2rem; height: 1.15rem; accent-color: #a95722; }
